@@ -14,7 +14,7 @@ function login() {
 }
 
 function showInputs() {
-  const goldTypes = ["999", "916", "835", "750", "375"];
+  const goldTypes = ["999.9P", "999.9", "999", "916", "835", "750", "375"];
   let html = "";
   goldTypes.forEach(type => {
     html += `<label>${type} Gold: <input id="g${type}" type="number"/></label><br/>`;
