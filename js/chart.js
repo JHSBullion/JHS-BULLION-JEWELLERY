@@ -48,7 +48,7 @@ new Chart(ctx, {
   options: {
     responsive: true,
     plugins: {
-      legend: { display: false }
+      legend: { display: true }  // ✅ 显示图例：999 / 916
     },
     scales: {
       y: { beginAtZero: false }
