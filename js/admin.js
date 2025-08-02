@@ -1,4 +1,3 @@
-
 const correctUsername = "admin";
 const correctPassword = "123456";
 
@@ -18,14 +17,13 @@ function showInputs() {
   const goldTypes = ["999", "916", "835", "750", "375"];
   let html = "";
   goldTypes.forEach(type => {
-    html += `<label>${type} Gold: <input id="g${type}" type="number"/></label><br/>`;
+    html += `<label>${type} Gold: <input id="g${type}" type="number" /></label><br/>`;
   });
   document.getElementById("priceInputs").innerHTML = html;
 }
 
 function saveData() {
   const goldTypes = ["999", "916", "835", "750", "375"];
-  const today = new Date().toISOString().slice(0, 10);
   const newData = {};
   let oldData = {};
 
@@ -40,18 +38,24 @@ function saveData() {
     if (!isNaN(val)) {
       const old = oldData[type] || {};
       const history = old.history || [];
-      if (history.length >= 7) history.shift();
+
+      if (history.length >= 7) history.shift(); // 保留 7 天
       history.push(val);
+
       const diff = old.current !== undefined ? val - old.current : 0;
-      newData[type] = { current: val, diff: diff, history: history };
+      newData[type] = {
+        current: val,
+        diff: diff,
+        history: history
+      };
     }
   });
 
-  // 保存新数据到 localStorage 以便下次计算
+  // 保存本地备份用于下一次 diff 比较
   localStorage.setItem("goldBackup", JSON.stringify(newData));
 
-  // 导出为 data.js 文件
-  let content = "window.goldPrices = " + JSON.stringify(newData, null, 2) + ";";
+  // 导出 data.js
+  const content = "window.goldPrices = " + JSON.stringify(newData, null, 2) + ";";
   const blob = new Blob([content], { type: "application/javascript" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
