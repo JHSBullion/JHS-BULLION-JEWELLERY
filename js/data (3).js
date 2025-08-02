@@ -1,1 +1,0 @@
-window.goldPrices = {"999": {"current": 477, "diff": 2, "history": [430, 434, 436, 442, 438, 441, 444]}, "916": {"current": 456, "diff": 1, "history": [410, 415, 418, 420, 417, 421, 423]}, "835": {"current": 400, "diff": 0}, "750": {"current": 218, "diff": 0}, "375": {"current": 156, "diff": 0}};
