@@ -14,7 +14,7 @@ function login() {
 }
 
 function showInputs() {
-  const goldTypes = ["999", "916", "835", "750", "835"];
+  const goldTypes = ["999", "916", "835", "750", "375"];
   let html = "";
   goldTypes.forEach(type => {
     html += `<label>${type} Gold: <input id="g${type}" type="number"/></label><br/>`;
@@ -23,7 +23,7 @@ function showInputs() {
 }
 
 function saveData() {
-  const goldTypes = ["999", "916", "835", "750", "835"];
+  const goldTypes = ["999", "916", "835", "750", "375"];
   const today = new Date().toISOString().slice(0, 10);
   const newData = {};
   let oldData = {};
