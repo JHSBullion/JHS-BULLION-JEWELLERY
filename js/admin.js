@@ -1,4 +1,3 @@
-
 const correctUsername = "admin";
 const correctPassword = "123456";
 
@@ -31,7 +30,7 @@ function saveData() {
   goldTypes.forEach(type => {
     const val = parseInt(document.getElementById("g" + type).value);
     if (!isNaN(val)) {
-      newData[type] = { current: val };
+      newData[type] = { current: val, diff: 0, history: [val, val, val, val, val, val, val] };
     }
   });
 
