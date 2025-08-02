@@ -1,27 +1,37 @@
 window.goldPrices = {
-  "999": {
-    current: 444,
-    diff: 3,
-    history: [430, 434, 436, 442, 438, 441, 444]
-  },
-  "916": {
-    current: 433,
-    diff: 2,
-    history: [426, 429, 430, 436, 432, 434, 433]
-  },
-  "835": {
-    current: 420,
-    diff: -2,
-    history: [421, 422, 421, 420, 418, 419, 420]
+  "375": {
+    "current": 100,
+    "diff": 0,
+    "history": [
+      100
+    ]
   },
   "750": {
-    current: 400,
-    diff: 0,
-    history: [400, 400, 400, 400, 400, 400, 400]
+    "current": 200,
+    "diff": 0,
+    "history": [
+      200
+    ]
   },
-  "375": {
-    current: 200,
-    diff: 1,
-    history: [198, 199, 199, 200, 199, 200, 200]
+  "835": {
+    "current": 378,
+    "diff": 0,
+    "history": [
+      378
+    ]
+  },
+  "916": {
+    "current": 455,
+    "diff": 0,
+    "history": [
+      455
+    ]
+  },
+  "999": {
+    "current": 467,
+    "diff": 0,
+    "history": [
+      467
+    ]
   }
 };
