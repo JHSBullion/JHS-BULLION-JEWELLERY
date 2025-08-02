@@ -22,10 +22,10 @@
         </tr>
       </thead>
       <tbody id="priceTable">
+        <tr><td>999.9 Bar(p)</td><td id="p999.9 Bar(p)">--</td><td id="t999.9 Bar(p)">--</td></tr>
+        <tr><td>999.9 Bar</td><td id="p999.9 Bar">--</td><td id="t999.9 Bar">--</td></tr>
         <tr><td>999 Gold</td><td id="p999">--</td><td id="t999">--</td></tr>
         <tr><td>916 Gold</td><td id="p916">--</td><td id="t916">--</td></tr>
-        <tr><td>835 Gold</td><td id="p835">--</td><td id="t835">--</td></tr>
-        <tr><td>750 Gold</td><td id="p750">--</td><td id="t750">--</td></tr>
         <tr><td>835 Gold</td><td id="p835">--</td><td id="t835">--</td></tr>
       </tbody>
     </table>
@@ -40,7 +40,7 @@
       <button onclick="window.open('https://wa.me/601154021213', '_blank')">WhatsApp 咨询</button>
     </div>
     <footer>
-      <div>JHS JEWELLERY SDN BHD 。07-3511104</div>
+      <div>JHS JEWELLERY SDN BHD. 07-3511104</div>
       <div><a href="https://www.jhsbullion.com" style="color: #b88c00; text-decoration: none;">www.jhsbullion.com</a></div>
       <div class="social">
         <a href="https://www.facebook.com/share/17GxKng5DB/?mibextid=wwXIfr" target="_blank"><i class="fab fa-facebook-f"></i></a>
@@ -51,17 +51,17 @@
   <script src="js/data.js"></script>
   <script>
     const table = {
+      "999.9 Bar(p)": document.getElementById("p999.9 Bar(p)"),
+      "999.9 Bar": document.getElementById("p999.9 Bar"),
       "999": document.getElementById("p999"),
       "916": document.getElementById("p916"),
-      "835": document.getElementById("p835"),
-      "750": document.getElementById("p750"),
       "835": document.getElementById("p835")
     };
     const trend = {
+      "999.9 Bar(p)": document.getElementById("t999.9 Bar(p)"),
+      "999.9 Bar": document.getElementById("t999.9 Bar"),
       "999": document.getElementById("t999"),
       "916": document.getElementById("t916"),
-      "835": document.getElementById("t835"),
-      "750": document.getElementById("t750"),
       "835": document.getElementById("t835")
     };
     const data = window.goldPrices || {};
