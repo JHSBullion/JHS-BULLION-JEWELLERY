@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JHS BULLION & JEWELLERY</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>JHS BULLION & JEWELLERY</h1>
+    <p class="subtitle">马来西亚黄金金价展示网站</p>
+    <h2>黄金金价表</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>类型</th>
+          <th>MYR / 克</th>
+          <th>趋势</th>
+        </tr>
+      </thead>
+      <tbody id="priceTable">
+        <tr><td>999 Gold</td><td id="p999">--</td><td id="t999">--</td></tr>
+        <tr><td>916 Gold</td><td id="p916">--</td><td id="t916">--</td></tr>
+        <tr><td>835 Gold</td><td id="p835">--</td><td id="t835">--</td></tr>
+        <tr><td>750 Gold</td><td id="p750">--</td><td id="t750">--</td></tr>
+        <tr><td>375 Gold</td><td id="p375">--</td><td id="t375">--</td></tr>
+      </tbody>
+    </table>
+    <canvas id="priceChart" width="400" height="200" style="margin-top: 30px;"></canvas>
+    <p id="updateDate">今日更新：--</p>
+    <div class="whatsapp">
+      <button onclick="window.open('https://wa.me/601154021213', '_blank')">WhatsApp 咨询</button>
+    </div>
+    <footer>
+      <div>JHS JEWELLERY SDN BHD 。07-3511104</div>
+      <div><a href="https://www.jhsbullion.com" style="color: #b88c00; text-decoration: none;">www.jhsbullion.com</a></div>
+      <div class="social">
+        <a href="https://www.facebook.com/share/17GxKng5DB/?mibextid=wwXIfr" target="_blank">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.instagram.com/jhs_bullion_and_jewellery" target="_blank">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+    </footer>
+  </div>
+  <script src="js/data.js"></script>
+  <script>
+    const table = {
+      "999": document.getElementById("p999"),
+      "916": document.getElementById("p916"),
+      "835": document.getElementById("p835"),
+      "750": document.getElementById("p750"),
+      "375": document.getElementById("p375")
+    };
+    const trend = {
+      "999": document.getElementById("t999"),
+      "916": document.getElementById("t916"),
+      "835": document.getElementById("t835"),
+      "750": document.getElementById("t750"),
+      "375": document.getElementById("t375")
+    };
+
+    const data = window.goldPrices || {};
+    const today = new Date().toISOString().slice(0, 10);
+    document.getElementById("updateDate").textContent = "今日更新：" + today;
+
+    for (let key in table) {
+      const price = data[key]?.current || "--";
+      const diff = data[key]?.diff;
+      table[key].textContent = price;
+      trend[key].innerHTML = diff > 0 
+        ? `<span style='color:green'>▲ ${diff}</span>` 
+        : diff < 0 
+        ? `<span style='color:red'>▼ ${Math.abs(diff)}</span>` 
+        : "--";
+    }
+  </script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<canvas id="priceChart" width="400" height="200" style="margin-top: 30px;"></canvas>
+<script>
+  const ctx = document.getElementById('priceChart').getContext('2d');
+  const labels = ['07-25', '07-26', '07-27', '07-28', '07-29', '07-30', '07-31'];
+  const prices = [430, 434, 436, 442, 438, 441, 444];
+
+  const changes = prices.map((val, i) => i === 0 ? 0 : val - prices[i - 1]);
+  const arrowLabels = changes.map(change => {
+    if (change > 0) return `▲ ${change}`;
+    if (change < 0) return `▼ ${Math.abs(change)}`;
+    return '--';
+  });
+
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: '999 Gold Price',
+        data: prices,
+        borderColor: '#d4a017',
+        backgroundColor: '#d4a017',
+        tension: 0.4,
+        fill: false,
+        pointRadius: 5,
+        pointHoverRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (context) => `RM ${context.parsed.y}`
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: false,
+          ticks: {
+            callback: value => value.toFixed(0)
+          }
+        }
+      },
+      animation: {
+        onComplete: () => {
+          const ctx2 = chart.ctx;
+          ctx2.font = 'bold 13px Segoe UI';
+          ctx2.textAlign = 'center';
+          ctx2.textBaseline = 'bottom';
+
+          chart.data.datasets[0].data.forEach((value, i) => {
+            if (i === 0) return;
+            const meta = chart.getDatasetMeta(0).data[i];
+            const change = changes[i];
+            const label = arrowLabels[i];
+            const color = change > 0 ? 'green' : change < 0 ? 'red' : 'gray';
+            ctx2.fillStyle = color;
+            ctx2.fillText(label, meta.x, meta.y - 10);
+          });
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
