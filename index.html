@@ -22,11 +22,11 @@
         </tr>
       </thead>
       <tbody id="priceTable">
-        <tr><td>999.9 Bar(p)</td><td id="p999.9 Bar(p)">--</td><td id="t999.9 Bar(p)">--</td></tr>
-        <tr><td>999.9 Bar</td><td id="p999.9 Bar">--</td><td id="t999.9 Bar">--</td></tr>
-        <tr><td>999 Gold</td><td id="p999">--</td><td id="t999">--</td></tr>
-        <tr><td>916 Gold</td><td id="p916">--</td><td id="t916">--</td></tr>
-        <tr><td>835 Gold</td><td id="p835">--</td><td id="t835">--</td></tr>
+        <tr><td>999.9 BAR(P)</td><td id="p999.9 BAR(P)">--</td><td id="t999.9 BAR(P)">--</td></tr>
+        <tr><td>999.9 BAR</td><td id="p999.9 BAR">--</td><td id="t999.9 BAR">--</td></tr>
+        <tr><td>999 GOLD</td><td id="p999">--</td><td id="t999">--</td></tr>
+        <tr><td>916 GOLD</td><td id="p916">--</td><td id="t916">--</td></tr>
+        <tr><td>835 GOLD</td><td id="p835">--</td><td id="t835">--</td></tr>
       </tbody>
     </table>
     <canvas id="goldChart" width="400" height="200" style="margin-top: 40px;"></canvas>
@@ -51,15 +51,15 @@
   <script src="js/data.js"></script>
   <script>
     const table = {
-      "999.9 Bar(p)": document.getElementById("p999.9 Bar(p)"),
-      "999.9 Bar": document.getElementById("p999.9 Bar"),
+      "999.9 BAR(P)": document.getElementById("p999.9 BAR(P)"),
+      "999.9 BAR": document.getElementById("p999.9 BAR"),
       "999": document.getElementById("p999"),
       "916": document.getElementById("p916"),
       "835": document.getElementById("p835")
     };
     const trend = {
-      "999.9 Bar(p)": document.getElementById("t999.9 Bar(p)"),
-      "999.9 Bar": document.getElementById("t999.9 Bar"),
+      "999.9 BAR(P)": document.getElementById("t999.9 BAR(P)"),
+      "999.9 BAR": document.getElementById("t999.9 BAR"),
       "999": document.getElementById("t999"),
       "916": document.getElementById("t916"),
       "835": document.getElementById("t835")
@@ -87,7 +87,7 @@
         labels: days,
         datasets: [
           {
-            label: "999 Gold",
+            label: "999.9 BAR(P)",
             data: prices999,
             borderColor: "#d4af37",
             backgroundColor: "#d4af37",
@@ -95,7 +95,7 @@
             tension: 0.3
           },
           {
-            label: "916 Gold",
+            label: "916 GOLD",
             data: prices916,
             borderColor: "#ff8800",
             backgroundColor: "#ff8800",
