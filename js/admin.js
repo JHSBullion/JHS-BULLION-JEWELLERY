@@ -17,7 +17,7 @@ function showInputs() {
   const goldTypes = ["999", "916", "835", "750", "375"];
   let html = "";
   goldTypes.forEach(type => {
-    html += \`<label>\${type} Gold: <input id="g\${type}" type="number"/></label><br/>\`;
+    html += `<label>${type} Gold: <input id="g${type}" type="number"/></label><br/>`;
   });
   document.getElementById("priceInputs").innerHTML = html;
 }
@@ -34,7 +34,6 @@ function saveData() {
     }
   });
 
-  // 默认 history 留空，建议后台完整功能版本使用 API 写入
   let content = "window.goldPrices = " + JSON.stringify(newData, null, 2) + ";";
   const blob = new Blob([content], { type: "application/javascript" });
   const a = document.createElement("a");
