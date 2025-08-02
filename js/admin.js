@@ -18,38 +18,40 @@ function showInputs() {
   const goldTypes = ["999", "916", "835", "750", "375"];
   let html = "";
   goldTypes.forEach(type => {
-    html += `<label>${type} Gold: <input id="g${type}" type="number" /></label><br/>`;
+    html += `<label>${type} Gold: <input id="g${type}" type="number"/></label><br/>`;
   });
   document.getElementById("priceInputs").innerHTML = html;
 }
 
 function saveData() {
   const goldTypes = ["999", "916", "835", "750", "375"];
-  let existingData = {};
-  try {
-    existingData = JSON.parse(localStorage.getItem("goldPrices") || "{}");
-  } catch (e) {}
+  const today = new Date().toISOString().slice(0, 10);
+  const newData = {};
+  let oldData = {};
 
-  const todayData = {};
+  try {
+    oldData = JSON.parse(localStorage.getItem("goldBackup") || "{}");
+  } catch (e) {
+    oldData = {};
+  }
+
   goldTypes.forEach(type => {
     const val = parseInt(document.getElementById("g" + type).value);
     if (!isNaN(val)) {
-      const history = existingData[type]?.history || [];
-      if (history.length >= 7) history.shift(); // 保持7天
+      const old = oldData[type] || {};
+      const history = old.history || [];
+      if (history.length >= 7) history.shift();
       history.push(val);
-      const prev = history.length >= 2 ? history[history.length - 2] : val;
-      const diff = val - prev;
-      todayData[type] = {
-        current: val,
-        diff: diff,
-        history: history
-      };
+      const diff = old.current !== undefined ? val - old.current : 0;
+      newData[type] = { current: val, diff: diff, history: history };
     }
   });
 
-  localStorage.setItem("goldPrices", JSON.stringify(todayData));
+  // 保存新数据到 localStorage 以便下次计算
+  localStorage.setItem("goldBackup", JSON.stringify(newData));
 
-  let content = "window.goldPrices = " + JSON.stringify(todayData, null, 2) + ";";
+  // 导出为 data.js 文件
+  let content = "window.goldPrices = " + JSON.stringify(newData, null, 2) + ";";
   const blob = new Blob([content], { type: "application/javascript" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
