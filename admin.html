@@ -1,25 +1,22 @@
+
 <!DOCTYPE html>
 <html lang="zh">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>后台管理 - 修改金价</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JHS 后台管理</title>
 </head>
 <body>
-  <div class="container">
-    <h2>后台管理登录</h2>
-    <div id="loginBox">
-      <input type="text" id="username" placeholder="用户名" /><br/>
-      <input type="password" id="password" placeholder="密码" /><br/>
-      <button onclick="login()">登录</button>
-    </div>
-
-    <div id="adminBox" style="display:none;">
-      <h2>修改金价</h2>
-      <div id="priceInputs"></div>
-      <button onclick="saveData()">保存金价</button>
-    </div>
+  <div id="loginBox">
+    <h2>后台登录</h2>
+    <input id="username" placeholder="用户名" />
+    <input id="password" type="password" placeholder="密码" />
+    <button onclick="login()">登录</button>
+  </div>
+  <div id="adminBox" style="display:none;">
+    <h2>输入今日金价</h2>
+    <div id="priceInputs"></div>
+    <button onclick="saveData()">保存金价</button>
   </div>
   <script src="js/admin.js"></script>
 </body>
