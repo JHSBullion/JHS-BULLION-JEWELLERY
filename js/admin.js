@@ -14,7 +14,7 @@ function login() {
 }
 
 function showInputs() {
-  const goldTypes = ["999.9P", "999.9", "999", "916", "835", "750", "375"];
+  const goldTypes = ["999.9P", "999.9", "999", "916", "835"];
   let html = "";
   goldTypes.forEach(type => {
     html += `<label>${type} Gold: <input id="g${type}" type="number"/></label><br/>`;
@@ -23,7 +23,7 @@ function showInputs() {
 }
 
 function saveData() {
-  const goldTypes = ["999", "916", "835", "750", "375"];
+  const goldTypes = ["999.9P", "999.9", "999", "916", "835"];
   const today = new Date().toISOString().slice(0, 10);
   const newData = {};
   let oldData = {};
@@ -47,6 +47,7 @@ function saveData() {
   });
 
   localStorage.setItem("goldBackup", JSON.stringify(newData));
+
   let content = "window.goldPrices = " + JSON.stringify(newData, null, 2) + ";";
   const blob = new Blob([content], { type: "application/javascript" });
   const a = document.createElement("a");
