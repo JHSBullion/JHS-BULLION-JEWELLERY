@@ -1,7 +1,22 @@
 window.goldPrices = {
-  "999": { "current": 999, "diff": -213 },
-  "916": { "current": 999, "diff": -213 },
-  "835": { "current": 999, "diff": -213 },
-  "750": { "current": 999, "diff": -213 },
-  "375": { "current": 999, "diff": -222 }
+  "375": {
+    "current": 1221,
+    "diff": 0
+  },
+  "750": {
+    "current": 1212,
+    "diff": 0
+  },
+  "835": {
+    "current": 1221,
+    "diff": 0
+  },
+  "916": {
+    "current": 1212,
+    "diff": 0
+  },
+  "999": {
+    "current": 1212,
+    "diff": 0
+  }
 };
