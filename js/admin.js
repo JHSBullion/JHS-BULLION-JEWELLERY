@@ -27,30 +27,14 @@ function saveData() {
   const goldTypes = ["999", "916", "835", "750", "375"];
   const today = new Date().toISOString().slice(0, 10);
   const newData = {};
-  let oldData = {};
-
-  try {
-    oldData = JSON.parse(localStorage.getItem("goldBackup") || "{}");
-  } catch (e) {
-    oldData = {};
-  }
 
   goldTypes.forEach(type => {
     const val = parseInt(document.getElementById("g" + type).value);
     if (!isNaN(val)) {
-      const old = oldData[type] || {};
-      const history = old.history || [];
-      if (history.length >= 7) history.shift();
-      history.push(val);
-      const diff = old.current !== undefined ? val - old.current : 0;
-      newData[type] = { current: val, diff: diff, history: history };
+      newData[type] = { current: val };
     }
   });
 
-  // 保存新数据到 localStorage 以便下次计算
-  localStorage.setItem("goldBackup", JSON.stringify(newData));
-
-  // 导出为 data.js 文件
   let content = "window.goldPrices = " + JSON.stringify(newData, null, 2) + ";";
   const blob = new Blob([content], { type: "application/javascript" });
   const a = document.createElement("a");
