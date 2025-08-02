@@ -22,23 +22,26 @@
         </tr>
       </thead>
       <tbody id="priceTable">
-  <tr><td>999.9 BAR(P)</td><td id="p9999P">--</td><td id="t9999P">--</td></tr>
-  <tr><td>999.9 BAR</td><td id="p9999">--</td><td id="t9999">--</td></tr>
-  <tr><td>999 GOLD</td><td id="p999">--</td><td id="t999">--</td></tr>
-  <tr><td>916 GOLD</td><td id="p916">--</td><td id="t916">--</td></tr>
-  <tr><td>835 GOLD</td><td id="p835">--</td><td id="t835">--</td></tr>
-</tbody>
+        <tr><td>999.9 BAR(P)</td><td id="p9999P">--</td><td id="t9999P">--</td></tr>
+        <tr><td>999.9 BAR</td><td id="p9999">--</td><td id="t9999">--</td></tr>
+        <tr><td>999 GOLD</td><td id="p999">--</td><td id="t999">--</td></tr>
+        <tr><td>916 GOLD</td><td id="p916">--</td><td id="t916">--</td></tr>
+        <tr><td>835 GOLD</td><td id="p835">--</td><td id="t835">--</td></tr>
+      </tbody>
     </table>
+
     <canvas id="goldChart" width="400" height="200" style="margin-top: 40px;"></canvas>
     <div style="text-align: center; margin-top: 10px;">
       <span style="color:#d4af37; font-weight:bold;">● 999 Gold</span>
       &nbsp;&nbsp;&nbsp;
       <span style="color:#ff8800; font-weight:bold;">● 916 Gold</span>
     </div>
+
     <p id="updateDate">今日更新：--</p>
     <div class="whatsapp">
       <button onclick="window.open('https://wa.me/601154021213', '_blank')">WhatsApp 咨询</button>
     </div>
+
     <footer>
       <div>JHS JEWELLERY SDN BHD. 07-3511104</div>
       <div><a href="https://www.jhsbullion.com" style="color: #b88c00; text-decoration: none;">www.jhsbullion.com</a></div>
@@ -48,38 +51,46 @@
       </div>
     </footer>
   </div>
+
   <script src="js/data.js"></script>
   <script>
-   const table = {
-  "999.9P": document.getElementById("p999.9P"),
-  "999.9": document.getElementById("p999.9"),
-  "999": document.getElementById("p999"),
-  "916": document.getElementById("p916"),
-  "835": document.getElementById("p835")
-};
-const trend = {
-  "999.9P": document.getElementById("t999.9P"),
-  "999.9": document.getElementById("t999.9"),
-  "999": document.getElementById("t999"),
-  "916": document.getElementById("t916"),
-  "835": document.getElementById("t835")
-};
+    const table = {
+      "999.9P": document.getElementById("p9999P"),
+      "999.9": document.getElementById("p9999"),
+      "999": document.getElementById("p999"),
+      "916": document.getElementById("p916"),
+      "835": document.getElementById("p835")
+    };
+    const trend = {
+      "999.9P": document.getElementById("t9999P"),
+      "999.9": document.getElementById("t9999"),
+      "999": document.getElementById("t999"),
+      "916": document.getElementById("t916"),
+      "835": document.getElementById("t835")
+    };
+
     const data = window.goldPrices || {};
     const today = new Date().toISOString().slice(0, 10);
     document.getElementById("updateDate").textContent = "今日更新：" + today;
+
     for (let key in table) {
       const price = data[key]?.current || "--";
       const diff = data[key]?.diff;
       table[key].textContent = price;
-      trend[key].innerHTML = diff > 0 ? `<span style='color:green'>▲ ${diff}</span>` :
-                          diff < 0 ? `<span style='color:red'>▼ ${Math.abs(diff)}</span>` : "--";
+      trend[key].innerHTML = diff > 0
+        ? `<span style='color:green'>▲ ${diff}</span>`
+        : diff < 0
+        ? `<span style='color:red'>▼ ${Math.abs(diff)}</span>` : "--";
     }
+
     const days = Array.from({length: 7}, (_, i) => {
       const d = new Date(); d.setDate(d.getDate() - (6 - i));
       return d.toISOString().slice(5, 10);
     });
+
     const prices999 = data["999"]?.history || [];
     const prices916 = data["916"]?.history || [];
+
     const ctx = document.getElementById("goldChart").getContext("2d");
     new Chart(ctx, {
       type: "line",
