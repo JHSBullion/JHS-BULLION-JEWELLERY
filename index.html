@@ -80,76 +80,6 @@
     }
   </script>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<canvas id="priceChart" width="400" height="200" style="margin-top: 30px;"></canvas>
-<script>
-  const ctx = document.getElementById('priceChart').getContext('2d');
-  const labels = ['07-25', '07-26', '07-27', '07-28', '07-29', '07-30', '07-31'];
-  const prices = [430, 434, 436, 442, 438, 441, 444];
-
-  const changes = prices.map((val, i) => i === 0 ? 0 : val - prices[i - 1]);
-  const arrowLabels = changes.map(change => {
-    if (change > 0) return `▲ ${change}`;
-    if (change < 0) return `▼ ${Math.abs(change)}`;
-    return '--';
-  });
-
-  const chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: '999 Gold Price',
-        data: prices,
-        borderColor: '#d4a017',
-        backgroundColor: '#d4a017',
-        tension: 0.4,
-        fill: false,
-        pointRadius: 5,
-        pointHoverRadius: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: (context) => `RM ${context.parsed.y}`
-          }
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: false,
-          ticks: {
-            callback: value => value.toFixed(0)
-          }
-        }
-      },
-      animation: {
-        onComplete: () => {
-          const ctx2 = chart.ctx;
-          ctx2.font = 'bold 13px Segoe UI';
-          ctx2.textAlign = 'center';
-          ctx2.textBaseline = 'bottom';
-
-          chart.data.datasets[0].data.forEach((value, i) => {
-            if (i === 0) return;
-            const meta = chart.getDatasetMeta(0).data[i];
-            const change = changes[i];
-            const label = arrowLabels[i];
-            const color = change > 0 ? 'green' : change < 0 ? 'red' : 'gray';
-            ctx2.fillStyle = color;
-            ctx2.fillText(label, meta.x, meta.y - 10);
-          });
-        }
-      }
-    }
-  });
-</script>
-
-
 <canvas id="goldChart" width="400" height="200" style="margin-top: 40px;"></canvas>
 <div style="text-align: center; margin-top: 10px;">
   <span style="color:#d4af37; font-weight:bold;">● 999 Gold</span>
@@ -176,7 +106,6 @@ function generateTrendData(pricesArray) {
 }
 
 const days = getLast7Days();
-const data = window.goldPrices || {};
 const prices999 = generateTrendData(data["999"]?.history);
 const prices916 = generateTrendData(data["916"]?.history);
 
