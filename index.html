@@ -50,20 +50,20 @@
   </div>
   <script src="js/data.js"></script>
   <script>
-    const table = {
-      "999.9 BAR(P)": document.getElementById("p999.9 BAR(P)"),
-      "999.9 BAR": document.getElementById("p999.9 BAR"),
-      "999": document.getElementById("p999"),
-      "916": document.getElementById("p916"),
-      "835": document.getElementById("p835")
-    };
-    const trend = {
-      "999.9 BAR(P)": document.getElementById("t999.9 BAR(P)"),
-      "999.9 BAR": document.getElementById("t999.9 BAR"),
-      "999": document.getElementById("t999"),
-      "916": document.getElementById("t916"),
-      "835": document.getElementById("t835")
-    };
+   const table = {
+  "999.9P": document.getElementById("p999.9P"),
+  "999.9": document.getElementById("p999.9"),
+  "999": document.getElementById("p999"),
+  "916": document.getElementById("p916"),
+  "835": document.getElementById("p835")
+};
+const trend = {
+  "999.9P": document.getElementById("t999.9P"),
+  "999.9": document.getElementById("t999.9"),
+  "999": document.getElementById("t999"),
+  "916": document.getElementById("t916"),
+  "835": document.getElementById("t835")
+};
     const data = window.goldPrices || {};
     const today = new Date().toISOString().slice(0, 10);
     document.getElementById("updateDate").textContent = "今日更新：" + today;
