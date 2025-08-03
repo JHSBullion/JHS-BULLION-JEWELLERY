@@ -4,7 +4,11 @@ window.goldPrices = {
     "diff": 0,
     "history": [
       347,
-      347
+      347,
+      {
+        "date": "2025-08-03",
+        "value": 347
+      }
     ]
   },
   "916": {
@@ -12,7 +16,11 @@ window.goldPrices = {
     "diff": 0,
     "history": [
       406,
-      406
+      406,
+      {
+        "date": "2025-08-03",
+        "value": 406
+      }
     ]
   },
   "999": {
@@ -20,7 +28,11 @@ window.goldPrices = {
     "diff": 0,
     "history": [
       442,
-      442
+      442,
+      {
+        "date": "2025-08-03",
+        "value": 442
+      }
     ]
   },
   "999.9P": {
@@ -28,7 +40,11 @@ window.goldPrices = {
     "diff": 0,
     "history": [
       452,
-      452
+      452,
+      {
+        "date": "2025-08-03",
+        "value": 452
+      }
     ]
   },
   "999.9": {
@@ -36,7 +52,11 @@ window.goldPrices = {
     "diff": 0,
     "history": [
       446,
-      446
+      446,
+      {
+        "date": "2025-08-03",
+        "value": 446
+      }
     ]
   }
 };
