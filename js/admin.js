@@ -39,19 +39,24 @@ function saveData() {
     if (!isNaN(val)) {
       const old = oldData[type] || {};
       const history = old.history || [];
-      if (history.length >= 7) history.shift();
-      history.push(val);
+
+      // 删除旧的相同日期
+      const filtered = history.filter(h => h.date !== today);
+      filtered.push({ date: today, value: val });
+
+      // 保留最后7条
+      const last7 = filtered.slice(-7);
       const diff = old.current !== undefined ? val - old.current : 0;
-      newData[type] = { current: val, diff: diff, history: history };
+      newData[type] = { current: val, diff: diff, history: last7 };
     }
   });
 
   localStorage.setItem("goldBackup", JSON.stringify(newData));
-
-  let content = "window.goldPrices = " + JSON.stringify(newData, null, 2) + ";";
+  const content = "window.goldPrices = " + JSON.stringify(newData, null, 2) + ";";
   const blob = new Blob([content], { type: "application/javascript" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = "data.js";
   a.click();
 }
+
