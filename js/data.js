@@ -3,6 +3,7 @@ window.goldPrices = {
     "current": 347,
     "diff": 0,
     "history": [
+      347,
       347
     ]
   },
@@ -10,6 +11,7 @@ window.goldPrices = {
     "current": 406,
     "diff": 0,
     "history": [
+      406,
       406
     ]
   },
@@ -17,6 +19,7 @@ window.goldPrices = {
     "current": 442,
     "diff": 0,
     "history": [
+      442,
       442
     ]
   },
@@ -24,6 +27,7 @@ window.goldPrices = {
     "current": 452,
     "diff": 0,
     "history": [
+      452,
       452
     ]
   },
@@ -31,6 +35,7 @@ window.goldPrices = {
     "current": 446,
     "diff": 0,
     "history": [
+      446,
       446
     ]
   }
