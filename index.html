@@ -83,23 +83,27 @@
         ? `<span style='color:red'>▼ ${Math.abs(diff)}</span>` : "--";
     }
 
-    const days = Array.from({length: 7}, (_, i) => {
-      const d = new Date(); d.setDate(d.getDate() - (6 - i));
-      return d.toISOString().slice(5, 10);
-    });
+    // 日期与价格读取
+    function getHistorySeries(goldType) {
+      const series = data[goldType]?.history || [];
+      return {
+        labels: series.map(item => item.date?.slice(5) || "--"),
+        values: series.map(item => item.value)
+      };
+    }
 
-    const prices999 = data["999"]?.history || [];
-    const prices916 = data["916"]?.history || [];
+    const chart999 = getHistorySeries("999");
+    const chart916 = getHistorySeries("916");
 
     const ctx = document.getElementById("goldChart").getContext("2d");
     new Chart(ctx, {
       type: "line",
       data: {
-        labels: days,
+        labels: chart999.labels,
         datasets: [
           {
             label: "999 GOLD",
-            data: prices999,
+            data: chart999.values,
             borderColor: "#d4af37",
             backgroundColor: "#d4af37",
             fill: false,
@@ -107,7 +111,7 @@
           },
           {
             label: "916 GOLD",
-            data: prices916,
+            data: chart916.values,
             borderColor: "#ff8800",
             backgroundColor: "#ff8800",
             fill: false,
