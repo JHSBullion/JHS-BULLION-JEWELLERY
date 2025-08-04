@@ -1,61 +1,51 @@
 window.goldPrices = {
   "835": {
-    "current": 347,
+    "current": 346,
     "diff": 0,
     "history": [
-      347,
-      347,
       {
-        "date": "2025-08-03",
-        "value": 347
+        "date": "2025-08-04",
+        "value": 346
       }
     ]
   },
   "916": {
-    "current": 406,
+    "current": 405,
     "diff": 0,
     "history": [
-      406,
-      406,
       {
-        "date": "2025-08-03",
-        "value": 406
+        "date": "2025-08-04",
+        "value": 405
       }
     ]
   },
   "999": {
-    "current": 442,
+    "current": 446,
     "diff": 0,
     "history": [
-      442,
-      442,
       {
-        "date": "2025-08-03",
-        "value": 442
+        "date": "2025-08-04",
+        "value": 446
       }
     ]
   },
   "999.9P": {
-    "current": 452,
+    "current": 454,
     "diff": 0,
     "history": [
-      452,
-      452,
       {
-        "date": "2025-08-03",
-        "value": 452
+        "date": "2025-08-04",
+        "value": 454
       }
     ]
   },
   "999.9": {
-    "current": 446,
+    "current": 450,
     "diff": 0,
     "history": [
-      446,
-      446,
       {
-        "date": "2025-08-03",
-        "value": 446
+        "date": "2025-08-04",
+        "value": 450
       }
     ]
   }
