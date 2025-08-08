@@ -1,7 +1,7 @@
 window.goldPrices = {
   "835": {
-    "current": 346,
-    "diff": -1,
+    "current": 347,
+    "diff": 1,
     "history": [
       {
         "date": "2025-08-04",
@@ -13,13 +13,13 @@ window.goldPrices = {
       },
       {
         "date": "2025-08-08",
-        "value": 346
+        "value": 347
       }
     ]
   },
   "916": {
-    "current": 406,
-    "diff": -1,
+    "current": 407,
+    "diff": 1,
     "history": [
       {
         "date": "2025-08-04",
@@ -31,13 +31,13 @@ window.goldPrices = {
       },
       {
         "date": "2025-08-08",
-        "value": 406
+        "value": 407
       }
     ]
   },
   "999": {
-    "current": 441,
-    "diff": -8,
+    "current": 442,
+    "diff": 1,
     "history": [
       {
         "date": "2025-08-04",
@@ -49,13 +49,13 @@ window.goldPrices = {
       },
       {
         "date": "2025-08-08",
-        "value": 441
+        "value": 442
       }
     ]
   },
   "999.9P": {
-    "current": 451,
-    "diff": -4,
+    "current": 452,
+    "diff": 1,
     "history": [
       {
         "date": "2025-08-04",
@@ -67,13 +67,13 @@ window.goldPrices = {
       },
       {
         "date": "2025-08-08",
-        "value": 451
+        "value": 452
       }
     ]
   },
   "999.9": {
-    "current": 445,
-    "diff": -6,
+    "current": 446,
+    "diff": 1,
     "history": [
       {
         "date": "2025-08-04",
@@ -85,8 +85,9 @@ window.goldPrices = {
       },
       {
         "date": "2025-08-08",
-        "value": 445
+        "value": 446
       }
     ]
   }
+};
 };
