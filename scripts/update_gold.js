@@ -1,5 +1,7 @@
 // scripts/update_gold.js
-// 拉 XAU/MYR（GoldAPI），把 MYR/oz → MYR/g，更新 js/data.js（整数；保留 60 天；每日 1 条）
+// 拉 XAU/MYR（GoldAPI），把 MYR/oz → MYR/g，更新 js/data.js
+// （整数；保留 90 天；每日 1 条）
+
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
@@ -12,6 +14,7 @@ if (!GOLDAPI_KEY) {
 
 const OZT_TO_G = 31.1034768;
 const PURITY = { '999.9P':0.9999,'999.9':0.9999,'999':0.999,'916':0.916,'835':0.835 };
+const HISTORY_DAYS = 90; // 保留天数
 
 function fetchGoldXauMyr() {
   const url = 'https://www.goldapi.io/api/XAU/MYR';
@@ -23,9 +26,13 @@ function fetchGoldXauMyr() {
       res.on('end', () => {
         try {
           const data = JSON.parse(chunks);
-          if (!data || typeof data.price !== 'number') return reject(new Error('GoldAPI invalid response: ' + chunks));
+          if (!data || typeof data.price !== 'number') {
+            return reject(new Error('GoldAPI invalid response: ' + chunks));
+          }
           resolve(data.price); // MYR per oz
-        } catch (e) { reject(e); }
+        } catch (e) {
+          reject(e);
+        }
       });
     });
     req.on('error', reject);
@@ -40,7 +47,8 @@ function readDataJs(filePath) {
   const m = raw.match(/window\.goldPrices\s*=\s*(\{[\s\S]*?\});/);
   if (!m) return { obj:null, raw };
   let obj = null;
-  try { obj = (new Function(`return (${m[1]});`))(); } catch { obj = null; }
+  try { obj = (new Function(`return (${m[1]});`))(); }
+  catch { obj = null; }
   return { obj, raw };
 }
 
@@ -51,9 +59,12 @@ function buildUpdated(existingObj, myrPerGramPure) {
   for (const k of Object.keys(PURITY)) {
     const price = Math.round(myrPerGramPure * PURITY[k]);
     const hist = Array.isArray(base[k]?.history) ? [...base[k].history] : [];
-    if (!hist.length || hist[hist.length-1].date !== today) hist.push({ date: today, value: price });
-    else hist[hist.length-1] = { date: today, value: price };
-    out[k] = { history: hist.slice(-60) };
+    if (!hist.length || hist[hist.length-1].date !== today) {
+      hist.push({ date: today, value: price });
+    } else {
+      hist[hist.length-1] = { date: today, value: price };
+    }
+    out[k] = { history: hist.slice(-HISTORY_DAYS) }; // ✅ 改成 90 天
   }
   return out;
 }
