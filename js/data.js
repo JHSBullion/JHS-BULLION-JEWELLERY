@@ -143,16 +143,16 @@ window.goldPrices = {
   }
 };
 window.storePrices = {
-  "999.9 BAR(P)": 458,
-  "999.9 BAR": 458,
-  "999 GOLD": 4374,
+  "999.9 BAR(P)": 447,
+  "999.9 BAR": 441,
+  "999 GOLD": 437,
   "916 GOLD": 403,
-  "835 GOLD": 366
+  "835 GOLD": 344
 };
 window.storeDiffs = {
-  "999.9 BAR(P)": 24,
-  "999.9 BAR": 24,
-  "999 GOLD": 229,
+  "999.9 BAR(P)": 23,
+  "999.9 BAR": 23,
+  "999 GOLD": 23,
   "916 GOLD": 21,
-  "835 GOLD": 19
+  "835 GOLD": 18
 };
