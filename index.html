@@ -51,97 +51,102 @@
       </div>
     </footer>
   </div>
-  
-<script src="js/data.js"></script>
-<script>
-  // 映射：表格里的 id 与 goldPrices 的 key
-  const table = {
-    "999.9P": document.getElementById("p9999P"),
-    "999.9":  document.getElementById("p9999"),
-    "999":    document.getElementById("p999"),
-    "916":    document.getElementById("p916"),
-    "835":    document.getElementById("p835")
-  };
-  const trend = {
-    "999.9P": document.getElementById("t9999P"),
-    "999.9":  document.getElementById("t9999"),
-    "999":    document.getElementById("t999"),
-    "916":    document.getElementById("t916"),
-    "835":    document.getElementById("t835")
-  };
 
-  const data = window.goldPrices || {};
-  const today = new Date().toISOString().slice(0, 10);
-  document.getElementById("updateDate").textContent = "今日更新：" + today;
+  <!-- 动态加载 data.js 加缓存版本号 -->
+  <script>
+    const script = document.createElement("script");
+    script.src = "js/data.js?v=" + Date.now(); // 每次刷新都会带新参数
+    document.head.appendChild(script);
 
-  // 从 history 里取最新价 & 涨跌（与上一条比较）
-  function latestAndDiff(key) {
-    const hist = (data[key] && Array.isArray(data[key].history)) ? data[key].history : [];
-    if (hist.length === 0) return { price: "--", diff: null };
-    const last = hist[hist.length - 1].value;
-    const prev = hist.length >= 2 ? hist[hist.length - 2].value : null;
-    const diff = (prev == null) ? null : (last - prev);
-    return { price: last, diff };
-  }
+    script.onload = () => {
+      // 表格元素映射
+      const table = {
+        "999.9P": document.getElementById("p9999P"),
+        "999.9":  document.getElementById("p9999"),
+        "999":    document.getElementById("p999"),
+        "916":    document.getElementById("p916"),
+        "835":    document.getElementById("p835")
+      };
+      const trend = {
+        "999.9P": document.getElementById("t9999P"),
+        "999.9":  document.getElementById("t9999"),
+        "999":    document.getElementById("t999"),
+        "916":    document.getElementById("t916"),
+        "835":    document.getElementById("t835")
+      };
 
-  // 填表
-  for (const key in table) {
-    const { price, diff } = latestAndDiff(key);
-    table[key].textContent = price === "--" ? "--" : String(price);
+      const data = window.goldPrices || {};
+      const today = new Date().toISOString().slice(0, 10);
+      document.getElementById("updateDate").textContent = "今日更新：" + today;
 
-    if (diff == null) {
-      trend[key].innerHTML = "--";
-    } else if (diff > 0) {
-      trend[key].innerHTML = `<span style="color:green">▲ ${diff}</span>`;
-    } else if (diff < 0) {
-      trend[key].innerHTML = `<span style="color:red">▼ ${Math.abs(diff)}</span>`;
-    } else {
-      trend[key].innerHTML = `<span style="#aaa">— 0</span>`;
-    }
-  }
+      // 取最新价 & 涨跌
+      function latestAndDiff(key) {
+        const hist = (data[key] && Array.isArray(data[key].history)) ? data[key].history : [];
+        if (hist.length === 0) return { price: "--", diff: null };
+        const last = hist[hist.length - 1].value;
+        const prev = hist.length >= 2 ? hist[hist.length - 2].value : null;
+        const diff = (prev == null) ? null : (last - prev);
+        return { price: last, diff };
+      }
 
-  // 折线图数据
-  function getHistorySeries(goldType) {
-    const series = (data[goldType] && Array.isArray(data[goldType].history)) ? data[goldType].history : [];
-    return {
-      labels: series.map(item => (item.date || "").slice(5)), // 显示 MM-DD
-      values: series.map(item => item.value)
-    };
-  }
+      for (const key in table) {
+        const { price, diff } = latestAndDiff(key);
+        table[key].textContent = price === "--" ? "--" : String(price);
 
-  const chart999 = getHistorySeries("999");
-  const chart916 = getHistorySeries("916");
-
-  const ctx = document.getElementById("goldChart").getContext("2d");
-  new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: chart999.labels,
-      datasets: [
-        {
-          label: "999 GOLD",
-          data: chart999.values,
-          borderColor: "#d4af37",
-          backgroundColor: "#d4af37",
-          fill: false,
-          tension: 0.3
-        },
-        {
-          label: "916 GOLD",
-          data: chart916.values,
-          borderColor: "#ff8800",
-          backgroundColor: "#ff8800",
-          fill: false,
-          tension: 0.3
+        if (diff == null) {
+          trend[key].innerHTML = "--";
+        } else if (diff > 0) {
+          trend[key].innerHTML = `<span style="color:green">▲ ${diff}</span>`;
+        } else if (diff < 0) {
+          trend[key].innerHTML = `<span style="color:red">▼ ${Math.abs(diff)}</span>`;
+        } else {
+          trend[key].innerHTML = `<span style="color:#aaa">— 0</span>`;
         }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { display: false } },
-      scales: { y: { beginAtZero: false } }
-    }
-  });
-</script>
+      }
+
+      // 折线图
+      function getHistorySeries(goldType) {
+        const series = (data[goldType] && Array.isArray(data[goldType].history)) ? data[goldType].history : [];
+        return {
+          labels: series.map(item => (item.date || "").slice(5)), // 显示 MM-DD
+          values: series.map(item => item.value)
+        };
+      }
+
+      const chart999 = getHistorySeries("999");
+      const chart916 = getHistorySeries("916");
+
+      const ctx = document.getElementById("goldChart").getContext("2d");
+      new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: chart999.labels,
+          datasets: [
+            {
+              label: "999 GOLD",
+              data: chart999.values,
+              borderColor: "#d4af37",
+              backgroundColor: "#d4af37",
+              fill: false,
+              tension: 0.3
+            },
+            {
+              label: "916 GOLD",
+              data: chart916.values,
+              borderColor: "#ff8800",
+              backgroundColor: "#ff8800",
+              fill: false,
+              tension: 0.3
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: false } }
+        }
+      });
+    };
+  </script>
 </body>
 </html>
