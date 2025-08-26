@@ -25,7 +25,7 @@ window.goldPrices = {
       },
       {
         "date": "2025-08-26",
-        "value": 382
+        "value": 383
       }
     ]
   },
@@ -141,4 +141,11 @@ window.goldPrices = {
       }
     ]
   }
+};
+window.latestPrices = {
+  "999.9 BAR(P)": 458,
+  "999.9 BAR": 458,
+  "999 GOLD": 458,
+  "916 GOLD": 420,
+  "835 GOLD": 383
 };
