@@ -145,14 +145,14 @@ window.goldPrices = {
 window.storePrices = {
   "999.9 BAR(P)": 458,
   "999.9 BAR": 458,
-  "999 GOLD": 458,
+  "999 GOLD": 4374,
   "916 GOLD": 403,
   "835 GOLD": 366
 };
 window.storeDiffs = {
   "999.9 BAR(P)": 24,
   "999.9 BAR": 24,
-  "999 GOLD": 24,
+  "999 GOLD": 229,
   "916 GOLD": 21,
   "835 GOLD": 19
 };
