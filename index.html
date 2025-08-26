@@ -148,5 +148,13 @@
       });
     };
   </script>
+
+<!-- 每 15 分钟自动刷新一次整页（900000 毫秒 = 15分钟） -->
+<script>
+  setInterval(() => {
+    location.reload();
+  }, 15 * 60 * 1000);
+</script>
+
 </body>
 </html>
