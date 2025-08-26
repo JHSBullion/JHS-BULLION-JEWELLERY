@@ -97,7 +97,7 @@
 
       // ----- “今日更新”显示到分钟 -----
       document.getElementById("updateDate").textContent =
-        "今日更新：" + formatTime(new Date());
+        "今日更新：" + formatTime(new Date()) + " （来自 GoldAPI）";
 
       // ----- 折线图：使用市场价历史 goldPrices -----
       const data = window.goldPrices || {};
