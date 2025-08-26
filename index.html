@@ -13,11 +13,12 @@
     <h1>JHS BULLION & JEWELLERY</h1>
     <p class="subtitle">马来西亚黄金金价展示网站</p>
     <h2>全马收金最高价</h2>
+
     <table>
       <thead>
         <tr>
           <th>类型</th>
-          <th>MYR / 克</th>
+          <th>MYR / 克（门店价）</th>
           <th>趋势</th>
         </tr>
       </thead>
@@ -38,6 +39,7 @@
     </div>
 
     <p id="updateDate">今日更新：--</p>
+
     <div class="whatsapp">
       <button onclick="window.open('https://wa.me/601154021213', '_blank')">WhatsApp 咨询</button>
     </div>
@@ -52,69 +54,62 @@
     </footer>
   </div>
 
-  <!-- 动态加载 data.js 加缓存版本号 -->
+  <!-- 动态加载 data.js（加时间戳，避免缓存） -->
   <script>
-    const script = document.createElement("script");
-    script.src = "js/data.js?v=" + Date.now(); // 每次刷新都会带新参数
-    document.head.appendChild(script);
+    function formatTime(d) {
+      const pad = n => String(n).padStart(2, "0");
+      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
 
-    script.onload = () => {
-      // 表格元素映射
-      const table = {
-        "999.9P": document.getElementById("p9999P"),
-        "999.9":  document.getElementById("p9999"),
-        "999":    document.getElementById("p999"),
-        "916":    document.getElementById("p916"),
-        "835":    document.getElementById("p835")
-      };
-      const trend = {
-        "999.9P": document.getElementById("t9999P"),
-        "999.9":  document.getElementById("t9999"),
-        "999":    document.getElementById("t999"),
-        "916":    document.getElementById("t916"),
-        "835":    document.getElementById("t835")
-      };
+    function loadData(callback) {
+      const s = document.createElement("script");
+      s.src = "js/data.js?v=" + Date.now();
+      s.onload = () => { callback && callback(); s.remove(); };
+      s.onerror = () => { console.warn("加载 data.js 失败"); s.remove(); };
+      document.head.appendChild(s);
+    }
 
+    function render() {
+      // ----- 表格：门店卖价 + 涨跌 -----
+      const store = window.storePrices || {};
+      const diffs = window.storeDiffs || {};
+      const rows = [
+        ["999.9 BAR(P)", "p9999P", "t9999P"],
+        ["999.9 BAR",    "p9999",  "t9999"],
+        ["999 GOLD",     "p999",   "t999"],
+        ["916 GOLD",     "p916",   "t916"],
+        ["835 GOLD",     "p835",   "t835"]
+      ];
+
+      for (const [label, priceId, trendId] of rows) {
+        const priceCell = document.getElementById(priceId);
+        const trendCell = document.getElementById(trendId);
+        const price = store[label];
+        priceCell.textContent = (price == null) ? "--" : String(price);
+
+        const d = diffs[label];
+        trendCell.innerHTML =
+          d == null ? "--" :
+          d > 0 ? `<span style="color:green">▲ ${d}</span>` :
+          d < 0 ? `<span style="color:red">▼ ${Math.abs(d)}</span>` :
+          `<span style="color:#aaa">— 0</span>`;
+      }
+
+      // ----- “今日更新”显示到分钟 -----
+      document.getElementById("updateDate").textContent =
+        "今日更新：" + formatTime(new Date());
+
+      // ----- 折线图：使用市场价历史 goldPrices -----
       const data = window.goldPrices || {};
-      const today = new Date().toISOString().slice(0, 10);
-      document.getElementById("updateDate").textContent = "今日更新：" + today;
-
-      // 取最新价 & 涨跌
-      function latestAndDiff(key) {
+      function seriesOf(key) {
         const hist = (data[key] && Array.isArray(data[key].history)) ? data[key].history : [];
-        if (hist.length === 0) return { price: "--", diff: null };
-        const last = hist[hist.length - 1].value;
-        const prev = hist.length >= 2 ? hist[hist.length - 2].value : null;
-        const diff = (prev == null) ? null : (last - prev);
-        return { price: last, diff };
-      }
-
-      for (const key in table) {
-        const { price, diff } = latestAndDiff(key);
-        table[key].textContent = price === "--" ? "--" : String(price);
-
-        if (diff == null) {
-          trend[key].innerHTML = "--";
-        } else if (diff > 0) {
-          trend[key].innerHTML = `<span style="color:green">▲ ${diff}</span>`;
-        } else if (diff < 0) {
-          trend[key].innerHTML = `<span style="color:red">▼ ${Math.abs(diff)}</span>`;
-        } else {
-          trend[key].innerHTML = `<span style="color:#aaa">— 0</span>`;
-        }
-      }
-
-      // 折线图
-      function getHistorySeries(goldType) {
-        const series = (data[goldType] && Array.isArray(data[goldType].history)) ? data[goldType].history : [];
         return {
-          labels: series.map(item => (item.date || "").slice(5)), // 显示 MM-DD
-          values: series.map(item => item.value)
+          labels: hist.map(it => (it.date || "").slice(5)), // MM-DD
+          values: hist.map(it => it.value)
         };
       }
-
-      const chart999 = getHistorySeries("999");
-      const chart916 = getHistorySeries("916");
+      const chart999 = seriesOf("999");
+      const chart916 = seriesOf("916");
 
       const ctx = document.getElementById("goldChart").getContext("2d");
       new Chart(ctx, {
@@ -146,14 +141,13 @@
           scales: { y: { beginAtZero: false } }
         }
       });
-    };
-  </script>
+    }
 
-<!-- 每 15 分钟自动刷新一次整页（900000 毫秒 = 15分钟） -->
-<script>
-  setInterval(() => {
-    location.reload();
-  }, 15 * 60 * 1000);
-</script>
+    // 首次加载并渲染
+    loadData(render);
+
+    // 每 15 分钟自动刷新整页（按需可改：单位毫秒）
+    setInterval(() => location.reload(), 15 * 60 * 1000);
+  </script>
 </body>
 </html>
