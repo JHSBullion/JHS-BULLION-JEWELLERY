@@ -45,7 +45,7 @@ window.goldPrices = {
       },
       {
         "date": "2025-09-01",
-        "value": 394
+        "value": 395
       }
     ]
   },
