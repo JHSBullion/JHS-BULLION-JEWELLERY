@@ -58,6 +58,10 @@ window.goldPrices = {
       {
         "date": "2025-09-04",
         "value": 401
+      },
+      {
+        "date": "2025-09-05",
+        "value": 402
       }
     ]
   },
@@ -118,6 +122,10 @@ window.goldPrices = {
       {
         "date": "2025-09-04",
         "value": 440
+      },
+      {
+        "date": "2025-09-05",
+        "value": 441
       }
     ]
   },
@@ -178,6 +186,10 @@ window.goldPrices = {
       {
         "date": "2025-09-04",
         "value": 480
+      },
+      {
+        "date": "2025-09-05",
+        "value": 481
       }
     ]
   },
@@ -238,6 +250,10 @@ window.goldPrices = {
       {
         "date": "2025-09-04",
         "value": 481
+      },
+      {
+        "date": "2025-09-05",
+        "value": 482
       }
     ]
   },
@@ -298,21 +314,25 @@ window.goldPrices = {
       {
         "date": "2025-09-04",
         "value": 481
+      },
+      {
+        "date": "2025-09-05",
+        "value": 482
       }
     ]
   }
 };
 window.storePrices = {
-  "999.9 BAR(P)": 468,
-  "999.9 BAR": 462,
-  "999 GOLD": 458,
-  "916 GOLD": 421,
+  "999.9 BAR(P)": 469,
+  "999.9 BAR": 463,
+  "999 GOLD": 459,
+  "916 GOLD": 422,
   "835 GOLD": 360
 };
 window.storeDiffs = {
-  "999.9 BAR(P)": -3,
-  "999.9 BAR": -3,
-  "999 GOLD": -3,
-  "916 GOLD": -3,
-  "835 GOLD": -2
+  "999.9 BAR(P)": 1,
+  "999.9 BAR": 1,
+  "999 GOLD": 1,
+  "916 GOLD": 1,
+  "835 GOLD": 0
 };
