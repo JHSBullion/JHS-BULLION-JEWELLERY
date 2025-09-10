@@ -2,37 +2,111 @@ name: Gold Price Auto Update
 
 on:
   schedule:
-    - cron: '5 * * * *'   # every hour at :05 (UTC) = 每小时马来西亚时间 :13
-  workflow_dispatch:
+    - cron: "0 * * * *"      # 每小时（UTC）一次
+  workflow_dispatch:          # 允许手动触发
 
 permissions:
-  contents: write
+  contents: write             # 允许写（commit/push）
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Show env basics
+        run: |
+          echo "Branch: $GITHUB_REF"
+          echo "Repo:   $GITHUB_REPOSITORY"
+          echo "Time(UTC): $(date -u '+%F %T')"
+
+      - name: Validate secrets
+        shell: bash
+        run: |
+          ok=1
+          if [[ -z "${{ secrets.METALS_API_KEY }}" ]]; then
+            echo "::error::METALS_API_KEY is EMPTY"
+            ok=0
+          else
+            echo "METALS_API_KEY: [OK] (masked)"
+          fi
+          if [[ -z "${{ secrets.NETLIFY_BUILD_HOOK }}" ]]; then
+            echo "NETLIFY_BUILD_HOOK: [MISSING] (只有在你想无变化也强制重建 Netlify 时需要)"
+          else
+            echo "NETLIFY_BUILD_HOOK: [OK] (masked)"
+          fi
+          if [[ $ok -eq 0 ]]; then
+            exit 1
+          fi
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: 20
 
-      - name: Run updater (no external deps)
-        env:
-          GOLDAPI_KEY: ${{ secrets.GOLDAPI_KEY }}
-        run: node scripts/update_gold.js
-
-      - name: Commit & push if changed
+      - name: Install deps (package.json at repo root)
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add js/data.js
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
+          if [[ -f package-lock.json || -f package.json ]]; then
+            npm ci || npm install
           else
-            git commit -m "chore(data): auto update gold prices $(date -u +'%Y-%m-%d %H:%M:%S')"
-            git push
+            echo "No package.json at repo root, skip npm install"
           fi
+
+      # ====== 运行你的更新脚本 ======
+      # 如果你的脚本位置不是 scripts/update_gold.js，请改这里
+      - name: Run updater script
+        id: run_script
+        env:
+          METALS_API_KEY: ${{ secrets.METALS_API_KEY }}
+          NODE_OPTIONS: --trace-warnings
+        run: |
+          set -e
+          echo "Running: node scripts/update_gold.js"
+          node scripts/update_gold.js
+          echo "Script exit code: $?"
+          # 可选：校验生成文件是否存在（你的前端读取的是 js/data.js）
+          if [[ ! -f js/data.js ]]; then
+            echo "::error::js/data.js not found after script. 请检查脚本的输出路径。"
+            exit 1
+          fi
+          echo "Found js/data.js, size: $(wc -c < js/data.js) bytes"
+          # 简单校验内容
+          head -n 5 js/data.js || true
+
+      - name: Git commit if changed
+        id: commit
+        shell: bash
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "chore(data): auto update gold prices $(date -u '+%F %T')"
+            git push
+            echo "changed=1" >> $GITHUB_OUTPUT
+            echo "Pushed changes."
+          else
+            echo "No changes to commit."
+            echo "changed=0" >> $GITHUB_OUTPUT
+          fi
+
+      # ====== 如果没有变化也要强制 Netlify 重建（可选） ======
+      - name: Trigger Netlify build hook when no changes
+        if: steps.commit.outputs.changed == '0' && env.HAVE_HOOK == '1'
+        env:
+          NETLIFY_BUILD_HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
+          HAVE_HOOK: ${{ secrets.NETLIFY_BUILD_HOOK != '' && '1' || '0' }}
+        run: |
+          echo "Triggering Netlify build hook (no repo change)..."
+          curl -sS -X POST -H "Content-Type: application/json" -d '{}' "$NETLIFY_BUILD_HOOK" || {
+            echo "::error::Failed to call Netlify hook"
+            exit 1
+          }
+          echo "Hook triggered."
+
+      - name: Summary
+        run: |
+          echo "==== Summary ===="
+          echo "Changed: ${{ steps.commit.outputs.changed }}"
+          echo "Done at: $(date -u '+%F %T')"
