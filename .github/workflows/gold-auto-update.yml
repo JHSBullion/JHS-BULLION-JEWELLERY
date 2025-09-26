@@ -3,10 +3,10 @@ name: Gold Price Auto Update
 on:
   schedule:
     - cron: "0 * * * *"      # 每小时（UTC）一次
-  workflow_dispatch:
+  workflow_dispatch:          # 允许手动触发
 
 permissions:
-  contents: write
+  contents: write             # 允许写（commit/push）
 
 jobs:
   update:
@@ -21,7 +21,7 @@ jobs:
           echo "Repo:   $GITHUB_REPOSITORY"
           echo "Time(UTC): $(date -u '+%F %T')"
 
-      # ✅ 改这里：检查 GOLDAPI_KEY（而不是 METALS_API_KEY）
+      # ✅ 改成检查 GOLDAPI_KEY
       - name: Validate secrets
         shell: bash
         run: |
@@ -54,7 +54,7 @@ jobs:
             echo "No package.json at repo root, skip npm install"
           fi
 
-      # ✅ 改这里：把 GOLDAPI_KEY 注入给脚本
+      # ✅ 改成把 GOLDAPI_KEY 注入给脚本
       - name: Run updater script
         id: run_script
         env:
