@@ -70,6 +70,10 @@ window.goldPrices = {
       {
         "date": "2025-09-27",
         "value": 426
+      },
+      {
+        "date": "2025-09-28",
+        "value": 426
       }
     ]
   },
@@ -141,6 +145,10 @@ window.goldPrices = {
       },
       {
         "date": "2025-09-27",
+        "value": 467
+      },
+      {
+        "date": "2025-09-28",
         "value": 467
       }
     ]
@@ -214,6 +222,10 @@ window.goldPrices = {
       {
         "date": "2025-09-27",
         "value": 510
+      },
+      {
+        "date": "2025-09-28",
+        "value": 510
       }
     ]
   },
@@ -286,6 +298,10 @@ window.goldPrices = {
       {
         "date": "2025-09-27",
         "value": 510
+      },
+      {
+        "date": "2025-09-28",
+        "value": 510
       }
     ]
   },
@@ -357,6 +373,10 @@ window.goldPrices = {
       },
       {
         "date": "2025-09-27",
+        "value": 510
+      },
+      {
+        "date": "2025-09-28",
         "value": 510
       }
     ]
