@@ -365,7 +365,7 @@ window.goldPrices = {
       },
       {
         "date": "2025-10-02",
-        "value": 518
+        "value": 519
       }
     ]
   },
@@ -457,7 +457,7 @@ window.goldPrices = {
       },
       {
         "date": "2025-10-02",
-        "value": 518
+        "value": 519
       }
     ]
   }
