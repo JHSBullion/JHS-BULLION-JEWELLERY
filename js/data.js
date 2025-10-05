@@ -98,6 +98,10 @@ window.goldPrices = {
       {
         "date": "2025-10-04",
         "value": 439
+      },
+      {
+        "date": "2025-10-05",
+        "value": 439
       }
     ]
   },
@@ -197,6 +201,10 @@ window.goldPrices = {
       },
       {
         "date": "2025-10-04",
+        "value": 481
+      },
+      {
+        "date": "2025-10-05",
         "value": 481
       }
     ]
@@ -298,6 +306,10 @@ window.goldPrices = {
       {
         "date": "2025-10-04",
         "value": 525
+      },
+      {
+        "date": "2025-10-05",
+        "value": 525
       }
     ]
   },
@@ -398,6 +410,10 @@ window.goldPrices = {
       {
         "date": "2025-10-04",
         "value": 526
+      },
+      {
+        "date": "2025-10-05",
+        "value": 526
       }
     ]
   },
@@ -497,6 +513,10 @@ window.goldPrices = {
       },
       {
         "date": "2025-10-04",
+        "value": 526
+      },
+      {
+        "date": "2025-10-05",
         "value": 526
       }
     ]
