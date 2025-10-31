@@ -121,7 +121,7 @@ window.goldPrices = {
       },
       {
         "date": "2025-10-31",
-        "value": 449
+        "value": 450
       }
     ]
   },
@@ -245,7 +245,7 @@ window.goldPrices = {
       },
       {
         "date": "2025-10-31",
-        "value": 493
+        "value": 494
       }
     ]
   },
@@ -493,7 +493,7 @@ window.goldPrices = {
       },
       {
         "date": "2025-10-31",
-        "value": 538
+        "value": 539
       }
     ]
   },
@@ -617,7 +617,7 @@ window.goldPrices = {
       },
       {
         "date": "2025-10-31",
-        "value": 538
+        "value": 539
       }
     ]
   }
