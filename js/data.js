@@ -667,7 +667,7 @@ window.storePrices = {
   "999.9 BAR": 592,
   "999 GOLD": 592,
   "916 GOLD": 495,
-  "835 GOLD": 457
+  "835 GOLD": 441
 };
 window.storeDiffs = {
   "999.9 BAR(P)": 0,
